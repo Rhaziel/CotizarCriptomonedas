@@ -43,15 +43,20 @@ class Interfaz {
      //Imprime el resultado de la cotización
 
      mostrarResultado(resultado, moneda, crypto){
+
+          //en caso de un resultado anterior, ocultarlo
+          const resultadoAnterior = document.querySelector('#resultado > div');
+
+          if(resultadoAnterior){
+               resultadoAnterior.remove();
+          }
+
           const datosMoneda = resultado[crypto][moneda];
 
           //recortar digitos de precio
           let precio = datosMoneda.PRICE.toFixed(2),
                porcentaje = datosMoneda.CHANGEPCTDAY.toFixed(2),
                actualizado = new Date(datosMoneda.LASTUPDATE * 1000).toLocaleDateString('es-AR');
-          
-
-          console.log(datosMoneda);
 
           //construir el template
           let templateHTML = `
@@ -65,8 +70,21 @@ class Interfaz {
                </div>
           `;
 
-          //insertar el resultado 
+          this.mostrarOcultarSpinner('block');
 
-          document.querySelector('#resultado').innerHTML = templateHTML;
+          setTimeout(() => {
+               //insertar el resultado 
+               document.querySelector('#resultado').innerHTML = templateHTML;
+
+               //ocultar el spinner
+               this.mostrarOcultarSpinner('none');
+
+          }, 3000);
+     }
+
+     //Mostrar un spinner de carga al enviar la cotización
+     mostrarOcultarSpinner(vista){
+          const spinner = document.querySelector('.contenido-spinner');
+          spinner.style.display = vista;
      }
 }
