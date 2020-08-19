@@ -39,4 +39,10 @@ class Interfaz {
           }, 3000)
 
      }
+
+     //Imprime el resultado de la cotización
+
+     mostrarResultado(resultado, moneda, crypto){
+          console.log(resultado[crypto][moneda]);
+     }
 }
